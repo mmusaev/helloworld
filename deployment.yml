@@ -45,6 +45,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: eshop-website
+            name: helloworld
             port:
               number: 80
