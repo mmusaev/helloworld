@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld
+spec:
+  selector: # Define the wrapping strategy
+    matchLabels: # Match all pods with the defined labels
+      app: helloworld # Labels follow the `name: value` template
+  template: # This is the template of the pod inside the deployment
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      containers:
+        - image: acseshop1916739278.azurecr.io/helloworld:v1
+          name: helloworld
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: ImagePrefix
+              value: /images
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: eshop-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: / # This defines an ingress rule to route traffic to the front end store service
+        pathType: Prefix
+        backend:
+          service:
+            name: eshop-website
+            port:
+              number: 80

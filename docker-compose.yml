@@ -1,0 +1,11 @@
+version: '3.4'
+services: 
+  frontend:
+    image: helloworld
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment: 
+      - ImagePrefix=http://localhost
+    ports:
+      - "32000:8080"
