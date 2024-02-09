@@ -14,7 +14,7 @@ spec:
       nodeSelector:
         kubernetes.io/os: linux
       containers:
-        - image: acseshop1916739278.azurecr.io/helloworld:v1
+        - image: acseshop.azurecr.io/helloworld:v1
           name: helloworld
           resources:
             requests:
